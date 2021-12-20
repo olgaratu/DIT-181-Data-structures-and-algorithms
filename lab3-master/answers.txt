@@ -1,0 +1,141 @@
+/******************************************************************************
+** DIT181  Datastrukturer och algoritmer, LP3 2021
+** Lab 3: Plagiarism detection
+*******************************************************************************/
+
+Group members:
+- [Renyuan Huang]
+- [Olga Ratushniak]
+- [Astrid Berntsson]
+
+/******************************************************************************
+** Task: Running the slow program
+**
+** 1. What is the asymptotic complexity of findSimilarity?
+**    Answer in terms of N, the total number of 5-grams in the input files.
+**    Assume that the number of duplicate occurrences of 5-grams is
+**    a small constant - that is, there is not much plagiarised text.
+******************************************************************************/
+
+d*K = n so, d*d*k*k = n^2
+answer: O(n^2)
+
+/******************************************************************************
+** 2. How long did the program take on the 'small' and 'medium' directories?
+**    Is the ratio between the times what you would expect, given the complexity?
+**    Explain very briefly why.
+*******************************************************************************/
+Small output
+
+Reading all input files took 0,04 seconds.
+Building n-gram index took 0,00 seconds.
+Computing similarity scores took 1,27 seconds.
+Finding the most similar files took 0,00 seconds.
+In total the program took 1,32 seconds.
+
+-----------------------------------------------
+Medium output
+
+Reading all input files took 0,12 seconds.
+Building n-gram index took 0,00 seconds.
+Computing similarity scores took 223,54 seconds.
+Finding the most similar files took 0,01 seconds.
+In total the program took 223,68 seconds.
+
+The size difference is 10 times and the the complexity quadratic so we would expect
+medium to take 100 times slower but we can see that it took 179 times slower instead.
+Maybe because the medium one contains more plagarism than the small.
+
+/******************************************************************************
+** 3. How long do you predict the program would take to run on
+**    the 'huge' directory? Show your calculations.
+*******************************************************************************/
+
+We can see that the size difference between medium and huge is 20 times biggger
+and the complexity is quadratic so, 20^2= 400. The huge directory should take 400
+times longer than medium which is 89742 seconds.
+
+/******************************************************************************
+** Task: Using binary search trees
+**
+** 4. Which of the BSTs in the program usually become unbalanced?
+**    Say very briefly how you deduced this.
+******************************************************************************/
+
+The files have no difference in size and height which means it is very unbalanced.
+This is because the paths are sorted prior to being put in the BST. Before changing the
+findsimilarity method this also resulted in a unbalanced tree for similarity because
+the files BST used in the method was already unbalanced.
+
+/******************************************************************************
+** 5 (optional). Is there a simple way to stop these trees becoming unbalanced?
+******************************************************************************/
+
+By not sorting the paths before putting them in the tree we will get a more balanced tree.
+
+/******************************************************************************
+** Task: Using scapegoat trees
+**
+** 6. Now what is the total asymptotic complexities of running and buildIndex
+**    and findSimilarity? Include brief justification. Again, assume a total
+**    of N 5-grams, and a constant number of duplicate occurrences of 5-grams.
+******************************************************************************/
+
+buildIndex:  O (n log n)
+Looking through all files and inserting all paths takes d*k time which equals n , then
+adding it to Scapegoat tree takes log n time. All method takes n log n time.
+
+findSimilarity: O (n log n)
+Firstly we loop through all unique 5-grams in N complexity ( all angrams in all files = d*k),
+secondly we get all of the paths from n-gram and put it on arraylist, which is log n. Further,
+assuming that paths are relatively small , we consider loops be constant time.
+So n (log n + 1) = n log n
+
+Total complexity: n log n
+
+
+/******************************************************************************
+** 7 (optional). What if the total similarity score is an arbitrary number S,
+**               rather than a small constant?
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** Appendix: General information
+**
+** A. Approximately how many hours did you spend on the assignment?
+******************************************************************************/
+
+Renyuan Huang:  [..hours..]
+Olga Ratushniak:  [..hours..]
+Astrid Berntsson:  [..hours..]
+
+/******************************************************************************
+** B. Are there any known bugs / limitations?
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** C. Did you collaborate with any other students on this lab?
+**    If so, please write in what way you collaborated and with whom.
+**    Also include any resources (including the web) that you may
+**    may have used in creating your design.
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** D. Describe any serious problems you encountered.                    
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** E. List any other comments here.
+**    Feel free to provide any feedback on how much you learned 
+**    from doing the assignment, and whether you enjoyed it.                                             
+******************************************************************************/
+
+[...]
