@@ -1,0 +1,130 @@
+/******************************************************************************
+** DIT181 Datastrukturer och algoritmer, LP3 2021
+** Lab 1: Sorting, Complexity
+*******************************************************************************/
+
+Group members:
+- [Renyuan Huang]
+- [Astrid Berntsson]
+- [Olga Ratushniak]
+
+/******************************************************************************
+** Task: Figuring out the complexity
+**
+** 1. What is the complexity of running each of the following algorithms
+**    on each of the following kinds of inputs?
+
+**    You only have to decide between quadratic or faster than quadratic.
+******************************************************************************/
+
+Insertion.java on:
+
+- random inputs:      [Quadratic]
+- 95% sorted inputs:  [Quadratic]
+- sorted inputs:      [Faster than quadratic]
+
+Quick.java on:
+
+- random inputs:      [Faster than quadratic]
+- 95% sorted inputs:  [Faster than quadratic]
+- sorted inputs:      [Quadratic]
+
+Merge.java on:
+
+- random inputs:      [Faster than quadratic]
+- 95% sorted inputs:  [Faster than quadratic]
+- sorted inputs:      [Faster than quadratic]
+
+/******************************************************************************
+** 2. How did you check if an algorithm had quadratic complexity or not?
+******************************************************************************/
+
+[If size of array increase by n and the time increase by n^2 we can say that it is quadratic. ]
+
+/******************************************************************************
+** Task: Improving quicksort
+**
+** 3. Do the following changes affect the complexity of quicksort
+**    on any kind of input data? If so, what is it that changes?
+******************************************************************************/
+
+Shuffling the array first:
+ [yes+reason]
+The complexity only affected the sorted input data and it changed from a quadratic complexity to faster than quadratic.
+The 95% sorted and random input continued to have the same complexity. (faster than complexity)
+
+ Because when shuffling first we make sure that the array is unsorted and as previously discussed
+ Quicksort perform better on an unsorted array.
+ It increases our chances of finding a medium value as the pivot.
+ If the array is sorted Quicksort will take the lowest value as a pivot.
+
+
+Median-of-three pivot selection:
+ [yes+reason]
+ By using a Median of three the complexity is faster than quadratic on all input data.
+ For sorted arrays it changed from quadratic to faster than quadratic.
+The reason for this change is because Median-of-three will pick a better pivot and lead to a more
+even partition of the array.
+
+
+Insertion sort for small arrays:
+ [no]
+
+ Insertion sort cutoff only improves the performance for smaller sized arrays.
+ The complexity is still quadratic when the only modification to quicksort is the insertion cutoff.
+
+/******************************************************************************
+** 4. What is a good cutoff to use for insertion sort?
+**    Explain briefly how you came to this answer.
+**    Remember that you should try to find the answer in a systematic way.
+******************************************************************************/
+
+ First we changed the samples' size of array to values which are closer to each other(10,20,30...100)
+ and compared  time cost for the different values for the modified quicksort with insertion sort cutoff.
+ And figure out with array size less than 60, the modified quicksort perform better than pure quicksort.
+ After we returned to bigger sample size for different cutoffs and we see that the difference is not significant.
+
+/******************************************************************************
+** 5. Which combination of improvements gives the best performance?
+******************************************************************************/
+Median-of-three+insertion sort cutoff
+
+/******************************************************************************
+** Appendix: General information
+**
+** A. Approximately how many hours did you spend on the assignment?
+******************************************************************************/
+
+[..Renyuan Huang..]:  [5]
+[..Astrid Berntsson..]:  [5]
+[..Olga Ratushniak..]:  [5]
+
+
+/******************************************************************************
+** B. Are there any known bugs / limitations?
+******************************************************************************/
+
+No
+
+/******************************************************************************
+** C. Did you collaborate with any other students on this lab?
+**    If so, please write in what way you collaborated and with whom.
+**    Also include any resources (including the web) that you may
+**    may have used in creating your design.
+******************************************************************************/
+
+No
+
+/******************************************************************************
+** D. Describe any serious problems you encountered.                    
+******************************************************************************/
+
+Math.max and math.min decrease the performance of Quicksort
+
+/******************************************************************************
+** E. List any other comments here.
+**    Feel free to provide any feedback on how much you learned 
+**    from doing the assignment, and whether you enjoyed it.                                             
+******************************************************************************/
+
+[...]
