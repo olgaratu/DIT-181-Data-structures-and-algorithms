@@ -1,0 +1,95 @@
+
+/******************************************************************************
+** DIT181  Datastrukturer och algoritmer, LP3 2021
+** Lab 2: Autocomplete
+*******************************************************************************/
+
+Group members:
+- [Olga Ratushniak]
+- [Renyuan Huang]
+- [Astrid Berntsson]
+
+/******************************************************************************
+** 1. Describe how your firstIndexOf() method in RangeBinarySearch.java
+**    finds the first index of a key that equals the search key.
+******************************************************************************
+
+First we check if the first element in array a is equal to the key and if it is the method
+returns 0. If it is not equal to the key then we enter the while loop.  We have two integers
+lo and hi, the while loop will continue to run for as long as lo is smaller than or equal to
+hi. In the while we create another integer middle that has the middle index of the array.
+In the while loop there are different if statements that checks certain conditions. First
+we check if the key is bigger than the middle element. If it is then we change the value of lo
+to middle +1 so that lo is pointing to the right side of the array. We don't consider the left side
+since we know the key is bigger than the middle element. Similarly we check if the key is smaller
+than the middle element.
+
+We also check if middle-1 and middle are equal if they are not that means that we have found the first
+index at position middle where the key appears. If we can't find a match the method returns -1.
+
+/******************************************************************************
+** 2. State and justify the asymptotic complexity of the operations
+**    in the Autocomplete class in the dictionary size n.
+**    For all Matches and numberOfMatches, the asymptotic complexity
+**    should also depend on the matching terms m.
+**
+**    You may take the number of comparisons as a proxy for the runtime.
+******************************************************************************/
+
+sortDictionary: O(n log n)
+
+In the ReadME file we are told that we can consider Array.sort to be O(n log n)
+
+allMatches: O(log n + mlogm)
+
+N is the size of dictionary array and M is the number of matched results.
+Both methods firstindexof and lastindexof have a complexity of logn.
+
+The for loop is O(m) and the Array.sort is mlogm. So the total complexity is:
+O(logn + logn + M + M log M) = O(logn + M log M)
+
+numberOfMatches: O(logn)
+
+Both methods firstindexof and lastindexof have a complexity of logn.
+This means that the complexity is O(logn)
+
+
+/******************************************************************************
+** Appendix: General information
+**
+** A. Approximately how many hours did you spend on the assignment?
+******************************************************************************/
+
+[Astrid Berntsson]:  [7]
+[Olga Ratushniak]:  [7]
+[Renyuan Huang]:  [7]
+
+/******************************************************************************
+** B. Are there any known bugs / limitations?
+******************************************************************************/
+
+No
+
+/******************************************************************************
+** C. Did you collaborate with any other students on this lab?
+**    If so, please write in what way you collaborated and with whom.
+**    Also include any resources (including the web) that you may
+**    may have used in creating your design.
+******************************************************************************/
+
+No
+
+/******************************************************************************
+** D. Describe any serious problems you encountered.                    
+******************************************************************************/
+
+No
+
+/******************************************************************************
+** E. List any other comments here.
+**    Feel free to provide any feedback on how much you learned 
+**    from doing the assignment, and whether you enjoyed it.                                             
+******************************************************************************/
+
+[...]
+

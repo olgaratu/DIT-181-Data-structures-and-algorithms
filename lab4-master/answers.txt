@@ -1,0 +1,195 @@
+/******************************************************************************
+** DIT181  Datastrukturer och algoritmer, LP3 2021
+** Lab 4: Path finder
+*******************************************************************************/
+
+Group members:
+
+Renyuan Huang
+Olga Ratushniak
+Astrid Berntsson
+
+/******************************************************************************
+** 1. List the minimal cost, shortest path, and number of loop iterations
+**    for each of the following invocations.
+******************************************************************************/
+
+> java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-SE.txt Lund Kiruna
+
+loop iterations: 5427
+minimal cost:    1826.0
+shortest path:   Lund -> Löddeköpinge -> Hjärnarp -> Åled -> Oskarström -> ... -> Storuman -> Sorsele -> Jokkmokk -> Gällivare -> Kiruna
+
+> java RunPathFinder ucs NPuzzle 3 "/HFG/BED/C_A/" "/ABC/DEF/GH_/"
+
+loop iterations: 483573
+minimal cost:    31.0
+shortest path:   /HFG/BED/C_A/ -> /HFG/BED/CA_/ -> /HFG/BE_/CAD/ -> /HFG/B_E/CAD/ -> /H_G/BFE/CAD/ -> ... -> /AC_/DBE/GHF/ -> /A_C/DBE/GHF/ -> /ABC/D_E/GHF/ -> /ABC/DE_/GHF/ ->  /ABC/DEF/GH_/
+
+> java RunPathFinder astar NPuzzle 3 "/HFG/BED/C_A/" "/ABC/DEF/GH_/"
+
+loop iterations: 32375
+minimal cost:    31.0
+
+> java RunPathFinder ucs NPuzzle 3 "/HGF/BED/C_A/" "/ABC/DEF/GH_/"
+
+loop iterations: 483841
+minimal cost:    [...]
+shortest path:   No path found from /HGF/BED/C_A/ to /ABC/DEF/GH_/
+
+> java RunPathFinder ucs GridGraph graphs/GridGraph/AR0011SR.map "23:161" "130:211"
+
+loop iterations: 159327
+minimal cost:    366.40411229460744
+shortest path:   23:161 -> 23:160 -> 23:159 -> 23:158 -> 23:157 -> ... -> 132:207 -> 131:208 -> 131:209 -> 130:210 -> 130:211
+
+> java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map "23:161" "130:211"
+
+loop iterations: 95160
+minimal cost:    366.4041122946075
+
+> java RunPathFinder ucs WordLadder graphs/WordLadder/words-saldo.txt syster broder
+
+loop iterations: 71182
+minimal cost:   11.0
+shortest path:   syster -> sylter -> sylten -> synten -> synden -> ... -> bauden -> bruden -> bröden -> bröder -> broder
+
+> java RunPathFinder astar WordLadder graphs/WordLadder/words-saldo.txt syster broder
+
+loop iterations: 7055
+minimal cost:    11.0
+
+/******************************************************************************
+** 2. For each of the three classes GridGraph, WordLadder, and NPuzzle,
+**    what is the approximate improvement in the number of loop iterations
+**    by running A* instead of UCS?
+**    Try a number of different examples per class.
+******************************************************************************/
+
+GridGraph:  approx. 2 times
+
+WordLadder: 10-130 times
+
+NPuzzle:  10-40 times
+
+/******************************************************************************
+** 3. For which of the three classes GridGraph, WordLadder, and NPuzzle,
+**    did the heuristics .guessCost() have the most impact?
+**    Why do you think this is the case?
+******************************************************************************/
+
+GuessCost() had the most impact on WordLadder, because the value of the heuristics of
+WordLadder is the smallest of these three classes and provides a more accurate estimation.
+Because it gives a better estimation the guessCost for wordLadder eliminates more irrelevant
+nodes than the other classes.
+
+
+/******************************************************************************
+** 4. Give pseudo-code of the following methods that you implemented.
+**    Try to abstract over details which are relevant only for Java.
+**    Make it easy to follow for a human.
+******************************************************************************/
+
+WordLadder.outgoingEdges(String w):
+
+LinkedList<DirectedEdge<String>> ougoingEdge:
+HashSet<String> newWordSet
+for i..w.length
+  for c: charset
+    String nextWord = w;
+    nextWord.set(i,c);
+    if(dictionary.contains(nextWord) && w != nextWord && !newWordSet.contain(newWord)):
+       newWordSet.add(w);
+       DirectedEdge<String> edge = new DirectedEdge<String>(w, nextWord);
+       outgoingEdge.add(edge);
+return outgoingEdge;
+
+
+WordLadder.guessCost(String w, String u):
+
+double estimateCost = 0;
+if (w.length() != u.length()) :
+             estimateCost = Double.INFINITY;
+             return estimateCost;
+for i..w.length:
+  if (w.charAt(i) != u.charAt(i)):
+      estimateCost++;
+return estimateCost;
+
+
+GridGraph.guessCost(Coord p, Coord q):
+
+return Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y));
+
+/******************************************************************************
+** 5. Give pseudo-code of the method .searchAstar() in PathFinder.
+******************************************************************************/
+
+PathFinder.searchAstar(Node start, Node goal):
+
+    int iterations = 0;
+    PriorityQueue pqueue = PriorityQueue ( Comparator(costToHere + costToGoal));
+    pqueue.add(start);
+    Set visitedNodes;
+    while !pqueue.isEmpty():
+       iterations++;
+       entry = pqueue.remove();
+       if entry == goal:
+          List path = extractPath(entry);
+          return new Result(true, start, goal, costToHere, path, iterations);
+       List neighbours =  grapth.outgoingEdges(entry);
+       if !visitedNodes.contains(entry):
+         visitedNodes.add(entry);
+         for (edge: neighbours):
+           double costToNext = entry.costToHere + edge.weight();
+           double costToGoal = graph.guessCost(edge.to(), goal);
+           pqueue.add(new PQEntry(edge.to(), costToNext, costToGoal, entry));
+
+    return new Result(false, start, goal, -1, null, iterations);
+
+
+/******************************************************************************
+** 6. What are the main differences between your implementations 
+**    of .searchAstar() and .searchUCS()?
+******************************************************************************/
+
+The main difference is using guessCost() method that allows us to prioritize nodes closer to the goal
+
+/******************************************************************************
+** Appendix: General information
+**
+** A. Approximately how many hours did you spend on the assignment?
+******************************************************************************/
+
+Renyuan Huang:  [10]
+Olga Ratushniak:  [8]
+Astrid Berntsson:  [8]
+
+/******************************************************************************
+** B. Are there any known bugs / limitations?
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** C. Did you collaborate with any other students on this lab?
+**    If so, please write in what way you collaborated and with whom.
+**    Also include any resources (including the web) that you may
+**    may have used in creating your design.
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** D. Describe any serious problems you encountered.                    
+******************************************************************************/
+
+[...]
+
+/******************************************************************************
+** E. List any other comments here.
+**    Feel free to provide any feedback on how much you learned 
+**    from doing the assignment, and whether you enjoyed it.                                             
+******************************************************************************/
+
+[...]
